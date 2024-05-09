@@ -10,8 +10,6 @@ export function MembersTable() {
   if (loading) return <PageLoader />
   if (error) return <p>Error : {error.message}</p>
 
-  console.log(data)
-
   return (
     <>
       <MembersDataTable columns={columns} data={data.members} />

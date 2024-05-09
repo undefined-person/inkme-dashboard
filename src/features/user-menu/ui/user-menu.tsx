@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
+import { logout } from '@/features/auth'
 
 export function UserMenu() {
   return (
@@ -34,7 +35,7 @@ export function UserMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={logout}>
           <LogOut className="w-4 h-4 mr-2" />
           <span>Log out</span>
         </DropdownMenuItem>

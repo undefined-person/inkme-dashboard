@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Input } from '@/shared/ui/input'
 import { Members } from './members-columns'
 import { Button, buttonVariants } from '@/shared/ui/button'
-import { cn } from '@/shared/utils'
+import { cn } from '@/shared/lib/cn'
 
 export function MemberMobile({ members }: { members: Members[] }) {
   return (

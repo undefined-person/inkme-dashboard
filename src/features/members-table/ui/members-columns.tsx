@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Button, buttonVariants } from '@/shared/ui/button'
-import { cn } from '@/shared/utils'
+import { buttonVariants } from '@/shared/ui/button'
+import { cn } from '@/shared/lib/cn'
+import { MemberStatus } from '@/shared/types/member.type'
+import { formatMemberStatus } from '@/shared/lib/format-member-status'
+import { Badge } from '@/shared/ui/badge'
+import { ToggleMemberStatus } from '@/features/toggle-member-status'
 
 export type Members = {
   id: number
   firstName: string
   lastName: string
   username747: string
+  status: MemberStatus
 }
 
 export const columns: ColumnDef<Members>[] = [
@@ -25,10 +30,17 @@ export const columns: ColumnDef<Members>[] = [
     header: 'LastName',
   },
   {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      return <Badge>{formatMemberStatus(row.original.status)}</Badge>
+    },
+  },
+  {
     id: 'actions',
     cell: ({ row }) => {
       return (
-        <div className="space-x-4">
+        <div className="flex items-center gap-4">
           <Link
             to={`/members/${row.original.id}`}
             className={cn(
@@ -38,8 +50,7 @@ export const columns: ColumnDef<Members>[] = [
             )}>
             View
           </Link>
-          <Button>Approve</Button>
-          <Button variant="destructive">Reject</Button>
+          <ToggleMemberStatus status={row.original.status} memberId={row.original.id} />
         </div>
       )
     },

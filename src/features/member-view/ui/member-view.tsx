@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 
 import { useGetMember } from '../model/use-get-member'
 import { PageLoader } from '@/shared/ui/page-loader'
+import { formatMemberStatus } from '@/shared/lib/format-member-status'
+import { Badge } from '@/shared/ui/badge'
 
 export function MemberView({ userId }: { userId: number }) {
   const { data, error, loading } = useGetMember({ id: userId })
@@ -17,6 +19,7 @@ export function MemberView({ userId }: { userId: number }) {
           {data.firstName} {data.lastName}
         </h2>
         <span className="text-slate-400">{data.username747}</span>
+        <Badge className="ml-auto">{formatMemberStatus(data.status)}</Badge>
       </div>
       <div className="grid grid-cols-3 gap-4 mt-4">
         <div>
@@ -48,10 +51,6 @@ export function MemberView({ userId }: { userId: number }) {
         <div>
           <h3 className="text-lg font-bold">Agreement</h3>
           <img src={data.agreementUrl} alt="Agreement" />
-        </div>
-        <div>
-          <h3 className="text-lg font-bold">Status</h3>
-          <p>{data.status}</p>
         </div>
         <div>
           <h3 className="text-lg font-bold">Health declaration</h3>

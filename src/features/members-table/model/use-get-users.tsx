@@ -7,6 +7,7 @@ const GET_MEMBERS = gql`
       username747
       firstName
       lastName
+      status
     }
   }
 `

@@ -63,3 +63,39 @@ export const authControllerRefreshToken = (
     options
   )
 }
+
+export const managementControllerApproveRegistration = (
+  memberId: number,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/api/ink-me-members-management/${memberId}/approve-registration`,
+      method: 'PUT',
+    },
+    options
+  )
+}
+
+export const managementControllerReject = (memberId: number, options?: SecondParameter<typeof createInstance>) => {
+  return createInstance<void>(
+    {
+      url: `/api/ink-me-members-management/${memberId}/reject`,
+      method: 'PUT',
+    },
+    options
+  )
+}
+
+export const managementControllerApproveAgreement = (
+  memberId: number,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/api/ink-me-members-management/${memberId}/approve-agreement`,
+      method: 'PUT',
+    },
+    options
+  )
+}
