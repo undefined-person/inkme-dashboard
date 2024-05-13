@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
 import { logout } from '@/features/auth'
+import { Link } from 'react-router-dom'
+import { getAddAdminRoute } from '@/shared/types/routes.types'
 
 export function UserMenu() {
   return (
@@ -31,7 +33,9 @@ export function UserMenu() {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <UserPlus className="w-4 h-4 mr-2" />
-            <span>Add Admin</span>
+            <Link className="cursor-default" to={getAddAdminRoute()}>
+              Add Admin
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

@@ -2,6 +2,7 @@ import { AppRoutesProps, Routes, getHomeRoute } from '@/shared/types/routes.type
 import { MembersPage } from '@/pages/members-page'
 import { SignIn } from '@/features/auth'
 import { MemberViewPage } from '@/pages/members-view-page'
+import { AddAdminPage } from '@/pages/add-admin-page'
 
 export const routeConfig: Record<Routes, AppRoutesProps> = {
   [Routes.HOME]: {
@@ -16,7 +17,7 @@ export const routeConfig: Record<Routes, AppRoutesProps> = {
   },
   [Routes.ADD_ADMIN]: {
     path: '/add-admin',
-    element: <div>Add Admin</div>,
+    element: <AddAdminPage />,
     withLayout: true,
   },
   [Routes.LOGIN]: {

@@ -14,14 +14,14 @@ export function MemberView({ userId }: { userId: number }) {
 
   return (
     <section className="mt-4">
-      <div className="flex items-center gap-4 text-3xl font-bold">
+      <div className="flex items-center gap-4 text-3xl font-bold max-md:text-xl">
         <h2>
           {data.firstName} {data.lastName}
         </h2>
         <span className="text-slate-400">{data.username747}</span>
         <Badge className="ml-auto">{formatMemberStatus(data.status)}</Badge>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-3 gap-4 mt-4 max-md:grid-cols-1">
         <div>
           <h3 className="text-lg font-bold">Contract number</h3>
           <p>{data.contractNumber}</p>

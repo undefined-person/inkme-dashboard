@@ -7,6 +7,41 @@ export const $api = axios.create({
   },
 })
 
+$api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+
+  return config
+})
+
+$api.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    const originalRequest = error.config
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if (error.response.status === 401 && !originalRequest._retry && refreshToken) {
+      originalRequest._retry = true
+
+      const oldToken = localStorage.getItem('refreshToken')
+
+      const { refreshToken, token } = await authControllerRefreshToken({ refreshToken: oldToken! })
+
+      localStorage.setItem('token', token)
+      localStorage.setItem('refreshToken', refreshToken)
+
+      return $api(originalRequest)
+    }
+
+    return Promise.reject(error)
+  }
+)
+
 export const createInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequestConfig): Promise<T> => {
   return $api({
     ...config,
@@ -59,6 +94,28 @@ export const authControllerRefreshToken = (
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       data: refreshTokenBodyDto,
+    },
+    options
+  )
+}
+
+type AddAdminBodyDto = {
+  username: string
+  password: string
+  email: string
+  phoneNumber: string
+}
+
+export const authControllerAddAdmin = (
+  addAdminBodyDto: BodyType<AddAdminBodyDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/api/account/register`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: addAdminBodyDto,
     },
     options
   )
