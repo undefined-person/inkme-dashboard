@@ -50,7 +50,7 @@ export function MemberView({ userId }: { userId: number }) {
           <Badge className={getBadgeColor(data.status)}>{formatMemberStatus(data.status)}</Badge>
           <div className="flex gap-2 mt-4">
             <ToggleMemberStatus
-              refetch={refetch as () => Promise<ApolloQueryResult<any>>}
+              refetch={refetch as () => Promise<ApolloQueryResult<unknown>>}
               status={data.status}
               memberId={data.id}
             />
