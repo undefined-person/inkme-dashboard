@@ -32,7 +32,7 @@ const GET_MEMBER_BY_ID = gql`
 `
 
 export const useGetMember = ({ id }: { id: number }) => {
-  const { loading, error, data } = useQuery(GET_MEMBER_BY_ID, {
+  const { loading, error, data, refetch } = useQuery(GET_MEMBER_BY_ID, {
     variables: { id },
   })
 
@@ -42,5 +42,6 @@ export const useGetMember = ({ id }: { id: number }) => {
     loading,
     error,
     data: data.memberById,
+    refetch,
   }
 }

@@ -5,10 +5,11 @@ import { PageLoader } from '@/shared/ui/page-loader'
 import { formatMemberStatus, getBadgeColor } from '@/shared/lib/format-member-status'
 import { Badge } from '@/shared/ui/badge'
 import { Separator } from '@/shared/ui/separator'
-import { cn } from '@/shared/lib/cn'
+import { ToggleMemberStatus } from '@/features/toggle-member-status'
+import { ApolloQueryResult } from '@apollo/client'
 
 export function MemberView({ userId }: { userId: number }) {
-  const { data, error, loading } = useGetMember({ id: userId })
+  const { data, error, loading, refetch } = useGetMember({ id: userId })
 
   if (loading || !data) return <PageLoader />
 
@@ -39,11 +40,22 @@ export function MemberView({ userId }: { userId: number }) {
   return (
     <section className="mt-4">
       <div className="flex items-center gap-4 text-3xl font-bold max-md:text-xl">
-        <h2>
-          {data.firstName} {data.lastName}
-        </h2>
-        <span className="text-slate-400">{data.username747}</span>
-        <Badge className={cn(getBadgeColor(data.status), 'ml-auto')}>{formatMemberStatus(data.status)}</Badge>
+        <div>
+          <h2>
+            {data.firstName} {data.lastName}
+          </h2>
+          <span className="text-slate-400">{data.username747}</span>
+        </div>
+        <div className="ml-auto">
+          <Badge className={getBadgeColor(data.status)}>{formatMemberStatus(data.status)}</Badge>
+          <div className="flex gap-2 mt-4">
+            <ToggleMemberStatus
+              refetch={refetch as () => Promise<ApolloQueryResult<any>>}
+              status={data.status}
+              memberId={data.id}
+            />
+          </div>
+        </div>
       </div>
       <div className="grid grid-cols-4 gap-4 mt-4 max-md:grid-cols-1">
         <div>

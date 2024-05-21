@@ -8,7 +8,7 @@ import { formatMemberStatus, getBadgeColor } from '@/shared/lib/format-member-st
 import { Badge } from '@/shared/ui/badge'
 import { ToggleMemberStatus } from '@/features/toggle-member-status'
 
-export type Members = {
+export interface IMember {
   id: number
   firstName: string
   lastName: string
@@ -16,7 +16,11 @@ export type Members = {
   status: MemberStatus
 }
 
-export const columns: ColumnDef<Members>[] = [
+export interface MembersList extends IMember {
+  refetch: () => void
+}
+
+export const columns: ColumnDef<MembersList>[] = [
   {
     accessorKey: 'username747',
     header: 'Username747',
@@ -50,7 +54,7 @@ export const columns: ColumnDef<Members>[] = [
             )}>
             View
           </Link>
-          <ToggleMemberStatus status={row.original.status} memberId={row.original.id} />
+          <ToggleMemberStatus refetch={row.original.refetch} status={row.original.status} memberId={row.original.id} />
         </div>
       )
     },

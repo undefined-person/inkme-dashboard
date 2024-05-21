@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { managementControllerReject } from '@/shared/api/api'
 import { useToast } from '@/shared/hooks/use-toast'
 
-export const useRejectMember = (memberId: number) => {
+export const useRejectMember = (memberId: number, refetch: () => void) => {
   const { toast } = useToast()
 
   const { mutate, isPending } = useMutation({
@@ -15,7 +15,7 @@ export const useRejectMember = (memberId: number) => {
       })
     },
     onSuccess: () => {
-      window.location.reload()
+      refetch()
     },
   })
 

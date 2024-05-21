@@ -13,12 +13,13 @@ const GET_MEMBERS = gql`
 `
 
 export const useGetMembers = () => {
-  const { loading, error, data } = useQuery(GET_MEMBERS)
+  const { loading, error, data, refetch } = useQuery(GET_MEMBERS)
 
   return {
     loading,
     error,
     data,
+    refetch,
   }
 }
 

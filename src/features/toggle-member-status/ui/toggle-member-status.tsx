@@ -4,10 +4,18 @@ import { useApproveRegistration } from '../model/use-approve-registration'
 import { useApproveAgreement } from '../model/use-approve-agreement'
 import { useRejectMember } from '../model/use-reject-member'
 
-export function ToggleMemberStatus({ status, memberId }: { status: MemberStatus; memberId: number }) {
-  const { approveRegistration, isPending: isPendingRegistration } = useApproveRegistration(memberId)
-  const { approveAgreement, isPending: isPendingApprove } = useApproveAgreement(memberId)
-  const { rejectMember, isPending: isPendingReject } = useRejectMember(memberId)
+export function ToggleMemberStatus({
+  status,
+  memberId,
+  refetch,
+}: {
+  status: MemberStatus
+  memberId: number
+  refetch: () => void
+}) {
+  const { approveRegistration, isPending: isPendingRegistration } = useApproveRegistration(memberId, refetch)
+  const { approveAgreement, isPending: isPendingApprove } = useApproveAgreement(memberId, refetch)
+  const { rejectMember, isPending: isPendingReject } = useRejectMember(memberId, refetch)
 
   switch (status) {
     case 'WAITING_FOR_REGISTRATION_APPROVE': {
