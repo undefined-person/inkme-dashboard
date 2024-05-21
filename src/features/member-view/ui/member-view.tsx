@@ -14,6 +14,28 @@ export function MemberView({ userId }: { userId: number }) {
 
   if (error) return <div>Error: {error.message}</div>
 
+  const renderAttachments = () => {
+    if (data.attachments.length === 0) {
+      return <p>No attachments</p>
+    }
+
+    return (
+      <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-1">
+        {data.attachments.map((attachment: { id: string; url: string; createAt: string }) => (
+          <div key={attachment.id}>
+            <img
+              className="rounded-md shadow-md max-lg:w-full"
+              width={640}
+              height={480}
+              src={attachment.url}
+              alt="Attachment"
+            />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <section className="mt-4">
       <div className="flex items-center gap-4 text-3xl font-bold max-md:text-xl">
@@ -103,21 +125,7 @@ export function MemberView({ userId }: { userId: number }) {
       <Separator className="my-4" />
       <div>
         <h3 className="text-lg font-bold">Attachments</h3>
-        {data.attachments.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-            {data.attachments.map((attachment: { createAt: string; id: number; url: string }) => (
-              <div key={attachment.id}>
-                <img
-                  className="rounded-md shadow-md max-lg:w-full"
-                  width={640}
-                  height={480}
-                  src={attachment.url}
-                  alt="Attachment"
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        {renderAttachments()}
       </div>
     </section>
   )
