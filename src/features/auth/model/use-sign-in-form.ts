@@ -34,6 +34,8 @@ export const useSignInForm = () => {
       navigate(getHomeRoute())
       localStorage.setItem('token', data.token)
       localStorage.setItem('refreshToken', data.refreshToken)
+      localStorage.setItem('tokenExpiryTime', data.tokenExpiryTime)
+      localStorage.setItem('refreshTokenExpiryTime', data.refreshTokenExpiryTime)
     },
     onError: (error: AxiosError) => {
       toast({

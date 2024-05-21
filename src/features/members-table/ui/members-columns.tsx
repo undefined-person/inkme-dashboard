@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { buttonVariants } from '@/shared/ui/button'
 import { cn } from '@/shared/lib/cn'
 import { MemberStatus } from '@/shared/types/member.type'
-import { formatMemberStatus } from '@/shared/lib/format-member-status'
+import { formatMemberStatus, getBadgeColor } from '@/shared/lib/format-member-status'
 import { Badge } from '@/shared/ui/badge'
 import { ToggleMemberStatus } from '@/features/toggle-member-status'
 
@@ -33,7 +33,7 @@ export const columns: ColumnDef<Members>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      return <Badge>{formatMemberStatus(row.original.status)}</Badge>
+      return <Badge className={getBadgeColor(row.original.status)}>{formatMemberStatus(row.original.status)}</Badge>
     },
   },
   {

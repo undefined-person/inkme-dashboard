@@ -17,6 +17,10 @@ const GET_MEMBER_BY_ID = gql`
       status
       healthDeclaration {
         doesNotHaveBloodDisorders
+        doesNotHaveSkinDisease
+        isNotDiabetic
+        isNotPregnant
+        isNotUnderTreatmentOrMedications
       }
     }
   }

@@ -1,16 +1,18 @@
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { setContext } from '@apollo/client/link/context'
 
 import { AppRouter } from './providers/router.provider'
 import { Toaster } from '@/shared/ui/toaster'
 import { queryClient } from '@/shared/api/query-client'
-import { refreshToken } from '@/features/auth/'
+import { isTokenCloseToExpiring } from '@/shared/lib/isTokenCloseToExpiring'
+import { refreshToken } from '@/features/auth'
+import { useEffect } from 'react'
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
+
   return {
     headers: {
       ...headers,
@@ -19,27 +21,26 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
-  if (graphQLErrors) {
-    for (const err of graphQLErrors) {
-      if (err.extensions && err.extensions.code === 'UNAUTHENTICATED') {
-        refreshToken()
-
-        return forward(operation)
-      }
-    }
-  }
-  if (networkError) {
-    console.log(`[Network error]: ${networkError}`)
-  }
-})
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([errorLink, authLink, new HttpLink({ uri: `${import.meta.env.VITE_API_URL}/graphql` })]),
+  link: ApolloLink.from([authLink, new HttpLink({ uri: `${import.meta.env.VITE_API_URL}/graphql` })]),
 })
 
 export const AppProvider = () => {
+  useEffect(() => {
+    const checkToken = () => {
+      if (isTokenCloseToExpiring()) {
+        refreshToken()
+      }
+    }
+
+    checkToken()
+
+    const intervalId = setInterval(checkToken, 5 * 60 * 1000)
+
+    return () => clearInterval(intervalId)
+  }, [])
+
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>

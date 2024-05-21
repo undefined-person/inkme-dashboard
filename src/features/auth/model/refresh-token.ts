@@ -7,7 +7,10 @@ export async function refreshToken() {
     })
     localStorage.setItem('token', data.token)
     localStorage.setItem('refreshToken', data.refreshToken)
+    localStorage.setItem('tokenExpiryTime', data.tokenExpiryTime)
+    localStorage.setItem('refreshTokenExpiryTime', data.refreshTokenExpiryTime)
   } catch (error) {
-    console.log('Error refreshing token', error)
+    window.location.href = '/login'
+    localStorage.clear()
   }
 }
