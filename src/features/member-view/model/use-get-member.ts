@@ -22,6 +22,11 @@ const GET_MEMBER_BY_ID = gql`
         isNotPregnant
         isNotUnderTreatmentOrMedications
       }
+      attachments {
+        createAt
+        id
+        url
+      }
     }
   }
 `

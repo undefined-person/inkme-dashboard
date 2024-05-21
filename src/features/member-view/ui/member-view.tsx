@@ -100,6 +100,25 @@ export function MemberView({ userId }: { userId: number }) {
           />
         </div>
       </div>
+      <Separator className="my-4" />
+      <div>
+        <h3 className="text-lg font-bold">Attachments</h3>
+        {data.attachments.length > 0 && (
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+            {data.attachments.map((attachment: { createAt: string; id: number; url: string }) => (
+              <div key={attachment.id}>
+                <img
+                  className="rounded-md shadow-md max-lg:w-full"
+                  width={640}
+                  height={480}
+                  src={attachment.url}
+                  alt="Attachment"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   )
 }
