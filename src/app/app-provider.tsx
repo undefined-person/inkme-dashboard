@@ -6,7 +6,7 @@ import { setContext } from '@apollo/client/link/context'
 import { AppRouter } from './providers/router.provider'
 import { Toaster } from '@/shared/ui/toaster'
 import { queryClient } from '@/shared/api/query-client'
-import { isTokenCloseToExpiring } from '@/shared/lib/isTokenCloseToExpiring'
+import { isTokenCloseToExpiring } from '@/shared/lib/is-token-close-to-expiring'
 import { refreshToken } from '@/features/auth'
 import { useEffect } from 'react'
 

@@ -11,7 +11,6 @@ import { useState } from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -34,15 +33,7 @@ export function MembersDataTable<TData, TValue>({ columns, data }: DataTableProp
   })
 
   return (
-    <div className="max-lg:hidden">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter users..."
-          value={(table.getColumn('username747')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('username747')?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-      </div>
+    <div className="container mx-auto mt-6 max-lg:hidden">
       <div className="border rounded-md">
         <Table>
           <TableHeader>

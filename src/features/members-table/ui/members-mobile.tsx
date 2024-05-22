@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 
-import { Input } from '@/shared/ui/input'
 import { MembersList } from './members-columns'
 import { buttonVariants } from '@/shared/ui/button'
 import { cn } from '@/shared/lib/cn'
@@ -10,8 +9,7 @@ import { Badge } from '@/shared/ui/badge'
 
 export function MemberMobile({ members }: { members: MembersList[] }) {
   return (
-    <div className="mt-4 lg:hidden">
-      <Input placeholder="Filter users..." value="" onChange={() => {}} className="max-w-sm" />
+    <div className="container px-4 mx-auto mt-4 lg:hidden">
       {members.map((member) => {
         return (
           <div key={member.id} className="py-4 border-b border-gray-200">
@@ -21,6 +19,7 @@ export function MemberMobile({ members }: { members: MembersList[] }) {
                 <h3 className="text-sm">
                   {member.firstName} {member.lastName}
                 </h3>
+                <span className="text-sm text-gray-600">{member.contractNumber}</span>
               </div>
               <Badge className={cn(getBadgeColor(member.status), 'ml-auto')}>{formatMemberStatus(member.status)}</Badge>
             </div>

@@ -13,6 +13,7 @@ export interface IMember {
   firstName: string
   lastName: string
   username747: string
+  contractNumber: string
   status: MemberStatus
 }
 
@@ -26,12 +27,14 @@ export const columns: ColumnDef<MembersList>[] = [
     header: 'Username747',
   },
   {
-    accessorKey: 'firstName',
-    header: 'FirstName',
+    header: 'Full Name',
+    cell: ({ row }) => {
+      return `${row.original.firstName} ${row.original.lastName}`
+    },
   },
   {
-    accessorKey: 'lastName',
-    header: 'LastName',
+    accessorKey: 'contractNumber',
+    header: 'Contract Number',
   },
   {
     accessorKey: 'status',
