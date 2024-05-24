@@ -40,7 +40,6 @@ export const AppProvider = () => {
 
     return () => clearInterval(intervalId)
   }, [])
-
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>

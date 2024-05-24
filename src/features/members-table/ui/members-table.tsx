@@ -8,10 +8,7 @@ import { FilterMembersForm } from '@/features/filter-members-form'
 import { Spinner } from '@/shared/ui/spinner'
 
 export function MembersTable() {
-  const { data, error, loading, refetch, isRefetching, getMembers, handleNextPage, handlePrevPage, currentPage } =
-    useGetMembers()
-
-  console.log(currentPage)
+  const { data, error, loading, refetch, isRefetching, getMembers, handleNextPage, handlePrevPage } = useGetMembers()
 
   useEffect(() => {
     getMembers({})

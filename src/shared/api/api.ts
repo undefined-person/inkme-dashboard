@@ -65,7 +65,7 @@ export const authControllerRefreshToken = (
 ) => {
   return createInstance<AuthResponse>(
     {
-      url: `/api/account/refresh-token`,
+      url: `/api/account/refresh`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       data: refreshTokenBodyDto,
