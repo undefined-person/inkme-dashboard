@@ -3,7 +3,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getPaginationRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
 } from '@tanstack/react-table'
@@ -15,16 +14,26 @@ import { Button } from '@/shared/ui/button'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  handleNextPage: () => void
+  handlePrevPage: () => void
+  isNextPage: boolean
+  isPrevPage: boolean
 }
 
-export function MembersDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function MembersDataTable<TData, TValue>({
+  columns,
+  data,
+  handleNextPage,
+  handlePrevPage,
+  isNextPage,
+  isPrevPage,
+}: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
@@ -69,10 +78,10 @@ export function MembersDataTable<TData, TValue>({ columns, data }: DataTableProp
         </Table>
       </div>
       <div className="flex items-center justify-end py-4 space-x-2">
-        <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        <Button variant="outline" size="sm" onClick={handlePrevPage} disabled={!isPrevPage}>
           Previous
         </Button>
-        <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        <Button variant="outline" size="sm" onClick={handleNextPage} disabled={!isNextPage}>
           Next
         </Button>
       </div>

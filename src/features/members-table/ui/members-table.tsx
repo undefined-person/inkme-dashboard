@@ -8,14 +8,17 @@ import { FilterMembersForm } from '@/features/filter-members-form'
 import { Spinner } from '@/shared/ui/spinner'
 
 export function MembersTable() {
-  const { data, error, loading, refetch, isRefetching, getMembers } = useGetMembers()
+  const { data, error, loading, refetch, isRefetching, getMembers, handleNextPage, handlePrevPage, currentPage } =
+    useGetMembers()
+
+  console.log(currentPage)
 
   useEffect(() => {
     getMembers({})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (error) return <p>Error : {error.message}</p>
+  if (error) return <p className="container text-red-500 max-lg:px-4">Error : {error.message}</p>
 
   return (
     <div>
@@ -27,13 +30,23 @@ export function MembersTable() {
       ) : (
         <>
           <MembersDataTable
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            isNextPage={data.members.pageInfo.hasNextPage}
+            isPrevPage={data.members.pageInfo.hasPreviousPage}
             columns={columns}
-            data={data.members.map((member: IMember) => ({
+            data={data.members.items.map((member: IMember) => ({
               refetch,
               ...member,
             }))}
           />
-          <MemberMobile members={data.members.map((member: IMember) => ({ refetch, ...member }))} />
+          <MemberMobile
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            isNextPage={data.members.pageInfo.hasNextPage}
+            isPrevPage={data.members.pageInfo.hasPreviousPage}
+            members={data.members.items.map((member: IMember) => ({ refetch, ...member }))}
+          />
         </>
       )}
     </div>

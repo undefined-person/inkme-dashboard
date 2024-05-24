@@ -5,12 +5,32 @@ import * as z from 'zod'
 import { MemberStatusEnum } from '@/shared/types/member.type'
 
 const filterMembersSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  username747: z.string().optional(),
-  contractNumber: z.string().optional(),
+  firstName: z
+    .string()
+    .min(3, 'First name must be at least 3 characters')
+    .max(255, 'First name must be at most 255 characters')
+    .optional()
+    .or(z.literal('')),
+  lastName: z
+    .string()
+    .min(3, 'Last name must be at least 3 characters')
+    .max(255, 'Last name must be at most 255 characters')
+    .optional()
+    .or(z.literal('')),
+  username747: z
+    .string()
+    .min(3, 'Username747 must be at least 3 characters')
+    .max(255, 'Username747 must be at most 255 characters')
+    .optional()
+    .or(z.literal('')),
+  contractNumber: z
+    .string()
+    .min(8, 'Contact number must be a 8 digit number')
+    .max(8, 'Contact number must be a 8 digit number')
+    .optional()
+    .or(z.literal('')),
   status: z.nativeEnum(MemberStatusEnum).optional(),
-  bankDetails: z.string().optional(),
+  bankDetails: z.string().optional().or(z.literal('')),
   createAt: z.date().optional().or(z.literal('')),
   // orderBy: z.string().optional(),
   // orderDirection: z.string().optional(),
